@@ -1,5 +1,8 @@
 在Unity3d中使用AutoMapper
 --------------------------------
+
+[![Build status](https://daixian.visualstudio.com/Pipeline/_apis/build/status/Pipeline%20-%20AutoMapper-Unity3d)](https://daixian.visualstudio.com/Pipeline/_build/latest?definitionId=10)
+
 ### 特性
 * 主要是支持IL2CPP。
 * 应该只保证了部分功能，不过unity3d用足够了。
