@@ -1,0 +1,5 @@
+namespace AutoMapper
+{
+    using System;
+
+}
