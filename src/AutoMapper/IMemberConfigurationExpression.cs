@@ -66,7 +66,7 @@ namespace AutoMapper
         /// </summary>
         /// <typeparam name="TMember">Member type of the source member to use</typeparam>
         /// <param name="sourceMember">Expression referencing the source member to map against</param>
-        void MapFrom<TMember>(Expression<Func<TSource, TMember>> sourceMember);
+        void MapFrom<TMember>(Func<TSource, TMember> sourceMember);
 
         /// <summary>
         /// Specify the source member to map from. Can only reference a member on the <typeparamref name="TSource"/> type
@@ -97,7 +97,7 @@ namespace AutoMapper
         /// Do not use the destination value instead of mapping from the source value or creating a new instance
         /// </summary>        
         void DoNotUseDestinationValue();
-        
+
         /// <summary>
         /// Use a custom value
         /// </summary>
@@ -122,7 +122,7 @@ namespace AutoMapper
         /// </summary>
         /// <param name="condition">Condition to evaluate using the current resolution context</param>
         void Condition(Func<ResolutionContext, bool> condition);
-       
+
         /// <summary>
         /// Conditionally map this member, evaluated before accessing the source value
         /// </summary>

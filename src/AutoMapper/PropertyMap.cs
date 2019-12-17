@@ -62,7 +62,7 @@ namespace AutoMapper
         }
 
         public bool CanBeSet => !(DestinationProperty is PropertyAccessor) ||
-                                ((PropertyAccessor) DestinationProperty).HasSetter;
+                                ((PropertyAccessor)DestinationProperty).HasSetter;
 
         public bool UseDestinationValue { get; set; }
 
@@ -194,8 +194,8 @@ namespace AutoMapper
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (PropertyMap)) return false;
-            return Equals((PropertyMap) obj);
+            if (obj.GetType() != typeof(PropertyMap)) return false;
+            return Equals((PropertyMap)obj);
         }
 
         public override int GetHashCode()
@@ -223,17 +223,19 @@ namespace AutoMapper
             return _preCondition == null || _preCondition(context);
         }
 
-        public void SetCustomValueResolverExpression<TSource, TMember>(Expression<Func<TSource, TMember>> sourceMember)
+        //只能去掉Expression
+        public void SetCustomValueResolverExpression<TSource, TMember>(Func<TSource, TMember> sourceMember)
         {
-            var body = sourceMember.Body as MemberExpression;
-            if (body != null)
-            {
-                SourceMember = body.Member;
-            }
-            CustomExpression = sourceMember;
+            //var body = sourceMember.Body as MemberExpression;
+            //if (body != null)
+            //{
+            //    SourceMember = body.Member;
+            //}
+            //CustomExpression = sourceMember;
             AssignCustomValueResolver(
                 new NullReferenceExceptionSwallowingResolver(
-                    new DelegateBasedResolver<TSource, TMember>(sourceMember.Compile())
+                    //这里这个原来这个sourceMember.Compile()不能工作的
+                    new DelegateBasedResolver<TSource, TMember>(sourceMember)
                     )
                 );
         }
