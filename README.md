@@ -143,3 +143,25 @@ public void TestMapper()
     Debug.Log("Test.TestMapper():Mapper的简单测试结束");
 }
 ```
+如果要构造不同的名字的属性映射，可能最好直接使用表达式，因为下面的方法目前只写了获取属性名。
+``` CSharp
+public class C1
+{
+    public byte[] a { get; set; }
+}
+
+public class C2
+{
+    public byte[] b { get; set; }
+}
+
+//C1.a -> C2.b
+
+//work,recommend 
+cfg.CreateMap<C1, C2>()
+    .ForMember("b", opt => opt.MapFrom(s => s.a));
+
+//work,not recommend 
+cfg.CreateMap<C1, C2>()
+    .ForMember("b", opt => opt.MapFrom<byte[]>("a"));
+```
