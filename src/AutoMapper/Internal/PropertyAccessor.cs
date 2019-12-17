@@ -14,7 +14,7 @@ namespace AutoMapper.Internal
             HasSetter = propertyInfo.GetSetMethod(true) != null;
             if (HasSetter)
             {
-                _lateBoundPropertySet = new Lazy<LateBoundPropertySet>(() => DelegateFactory.CreateSet(propertyInfo));
+                _lateBoundPropertySet = new Lazy<LateBoundPropertySet>(() => (target, value) => { _propertyInfo.SetValue(target, value); });
             }
         }
 

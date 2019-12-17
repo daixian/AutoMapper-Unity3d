@@ -22,7 +22,8 @@ namespace AutoMapper
             Ctor = ctor;
             CtorParams = ctorParams;
 
-            _runtimeCtor = new Lazy<LateBoundParamsCtor>(() => DelegateFactory.CreateCtor(ctor, CtorParams));
+            //_runtimeCtor = new Lazy<LateBoundParamsCtor>(() => DelegateFactory.CreateCtor(ctor, CtorParams));
+            _runtimeCtor = new Lazy<LateBoundParamsCtor>(() => (paramets) => Activator.CreateInstance(ctor.DeclaringType, true, paramets));
         }
 
         private static readonly IExpressionResultConverter[] ExpressionResultConverters =

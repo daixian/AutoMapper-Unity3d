@@ -6,7 +6,7 @@ namespace AutoMapper.Internal
 
     public class FieldGetter : MemberGetter
     {
-        private readonly FieldInfo _fieldInfo;
+        protected readonly FieldInfo _fieldInfo;
         private readonly Lazy<LateBoundFieldGet> _lateBoundFieldGet;
 
         public FieldGetter(FieldInfo fieldInfo)
@@ -14,7 +14,7 @@ namespace AutoMapper.Internal
             _fieldInfo = fieldInfo;
             Name = fieldInfo.Name;
             MemberType = fieldInfo.FieldType;
-            _lateBoundFieldGet = new Lazy<LateBoundFieldGet>(() => DelegateFactory.CreateGet(fieldInfo));
+            _lateBoundFieldGet = new Lazy<LateBoundFieldGet>(() => (obj) => _fieldInfo.GetValue(obj));
         }
 
         public override MemberInfo MemberInfo => _fieldInfo;

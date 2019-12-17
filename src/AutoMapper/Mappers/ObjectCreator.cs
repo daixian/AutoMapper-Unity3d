@@ -55,11 +55,13 @@ namespace AutoMapper.Mappers
 
         public static object CreateObject(Type type)
         {
-            return type.IsArray
-                ? CreateArray(type.GetElementType(), 0)
-                : type == typeof (string)
-                    ? null
-                    : DelegateFactory.CreateCtor(type)();
+            //直接这样构造看看
+            return Activator.CreateInstance(type, true);
+            //return type.IsArray
+            //    ? CreateArray(type.GetElementType(), 0)
+            //    : type == typeof (string)
+            //        ? null
+            //        : DelegateFactory.CreateCtor(type)();
         }
     }
 

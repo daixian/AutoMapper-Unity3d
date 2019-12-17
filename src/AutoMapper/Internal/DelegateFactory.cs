@@ -43,21 +43,25 @@
             return lambda.Compile();
         }
 
+        [Obsolete]
         public LateBoundPropertyGet CreateGet(PropertyInfo property)
         {
-            ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "target");
+            //ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "target");
 
-            MemberExpression member = Expression.Property(
-                Expression.Convert(instanceParameter, property.DeclaringType), property);
+            //MemberExpression member = Expression.Property(
+            //    Expression.Convert(instanceParameter, property.DeclaringType), property);
 
-            Expression<LateBoundPropertyGet> lambda = Expression.Lambda<LateBoundPropertyGet>(
-                Expression.Convert(member, typeof (object)),
-                instanceParameter
-                );
+            //Expression<LateBoundPropertyGet> lambda = Expression.Lambda<LateBoundPropertyGet>(
+            //    Expression.Convert(member, typeof (object)),
+            //    instanceParameter
+            //    );
 
-            return lambda.Compile();
+            //return lambda.Compile();
+            //这个函数只有一个引用，直接写到PropertyGetter类里去算了
+            return new LateBoundPropertyGet((target) => { return property.GetValue(target); });
         }
 
+        [Obsolete]
         public LateBoundFieldGet CreateGet(FieldInfo field)
         {
             ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "target");
@@ -72,6 +76,7 @@
             return lambda.Compile();
         }
 
+        [Obsolete]
         public LateBoundFieldSet CreateSet(FieldInfo field)
         {
             ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "target");
@@ -90,6 +95,7 @@
             return lambda.Compile();
         }
 
+        [Obsolete]
         public LateBoundPropertySet CreateSet(PropertyInfo property)
         {
             ParameterExpression instanceParameter = Expression.Parameter(typeof (object), "target");
@@ -110,6 +116,7 @@
             return lambda.Compile();
         }
 
+        [Obsolete]
         public LateBoundCtor CreateCtor(Type type)
         {
             LateBoundCtor ctor = _ctorCache.GetOrAdd(type, t =>
@@ -153,7 +160,7 @@
         {
             var expressions = new List<UnaryExpression>();
             var realMethodParameters = method.GetParameters();
-            if (method.IsDefined(typeof (ExtensionAttribute), false))
+            if (method.IsDefined(typeof(ExtensionAttribute), false))
             {
                 Type extendedType = method.GetParameters()[0].ParameterType;
                 expressions.Add(Expression.Convert(instanceParameter, extendedType));
@@ -168,9 +175,11 @@
             return expressions.ToArray();
         }
 
+        [Obsolete]
         public LateBoundParamsCtor CreateCtor(ConstructorInfo constructorInfo,
             IEnumerable<ConstructorParameterMap> ctorParams)
         {
+            //看起来是带参数的构造
             ParameterExpression paramsExpr = Expression.Parameter(typeof (object[]), "parameters");
 
             var convertExprs = ctorParams

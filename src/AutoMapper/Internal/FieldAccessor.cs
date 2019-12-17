@@ -11,7 +11,7 @@ namespace AutoMapper.Internal
         public FieldAccessor(FieldInfo fieldInfo)
             : base(fieldInfo)
         {
-            _lateBoundFieldSet = new Lazy<LateBoundFieldSet>(() => DelegateFactory.CreateSet(fieldInfo));
+            _lateBoundFieldSet = new Lazy<LateBoundFieldSet>(() => (target, value) => { _fieldInfo.SetValue(target, value); });
         }
 
         public void SetValue(object destination, object value)

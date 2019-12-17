@@ -15,6 +15,7 @@ namespace AutoMapper.Internal
             _methodInfo = methodInfo;
             Name = _methodInfo.Name;
             _memberType = _methodInfo.ReturnType;
+            //我不知道为什么要处理Method，如果它执行了那么就报错再看吧
             _lateBoundMethod = new Lazy<LateBoundMethod>(() => DelegateFactory.CreateGet(methodInfo));
         }
 
